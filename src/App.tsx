@@ -1,69 +1,80 @@
 import { useState } from 'react';
-import './App.css'
+import './App.css';
+
+type Tool = 'water' | 'remove' | null;
+
+// ==========================================
+// ⚙️ CONFIGURATION
+// ==========================================
+const TOTAL_SLOTS = 9;
+
+const STAGE_EMOJIS: Record<number, string> = {
+  0: "🟫", // Dirt
+  1: "🌱", // Sprout
+  2: "🌿", // Growing
+  3: "🌻" // fully grown
+};
+// ==========================================
+
+// Automatically finds the highest stage number available in your config (e.g., 4)
+const MAX_STAGE = Object.keys(STAGE_EMOJIS).length - 1;
 
 function App() {
-  const [slots, setSlots] = useState({
-    1: 0,
-    2: 0,
-    3: 0,
-    4: 0,
-    5: 0,
-    6: 0,
-    7: 0,
-    8: 0,
-    9: 0,
-  });
+  // Generates an array of 0s based on your TOTAL_SLOTS config
+  const [slots, setSlots] = useState<number[]>(Array(TOTAL_SLOTS).fill(0));
+  const [activeTool, setActiveTool] = useState<Tool>('water');
 
-  const stageEmojis = {
-    0: "🟫", // Empty dirt
-    1: "🌱", // Sprout
-    2: "🌿", // Growing
-    3: "🌻", // Fully Grown (Max)
-  };
+  const columns = Math.ceil(Math.sqrt(TOTAL_SLOTS));
 
-  const growCrop = (id: number) => {
-    setSlots(prevSlots => {
-      const currentStage = prevSlots[id as keyof typeof prevSlots];
+  const clickCrop = (clickedIndex: number) => {
+    setSlots(prev =>
+      prev.map((stage, idx) => {
+        if (idx !== clickedIndex) return stage;
 
-      if (currentStage >= 3) {
-        return prevSlots;
-      }
+        // If it IS the clicked box, check the tool
+        if (activeTool === 'water') return Math.min(stage + 1, MAX_STAGE);
+        if (activeTool === 'remove') return 0;
 
-      return {
-        ...prevSlots,
-        [id]: currentStage + 1
-      };
-    });
+        return stage;
+      })
+    );
   };
 
   return (
     <>
       <h1 className="game-title">My Garden</h1>
-
       <div className="game-container">
 
-        <div className="garden-grid">
-          {Object.keys(slots).map((key) => {
-            const id = Number(key);
-            const currentStage = slots[id as keyof typeof slots] as 0 | 1 | 2 | 3;
-
-            return (
-              <div key={id} className="garden-plot" onClick={() => growCrop(id)}>
-                {stageEmojis[currentStage]}
-              </div>
-            );
-          })}
+        <div
+          className="garden-grid"
+          style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}
+        >
+          {slots.map((stage, index) => (
+            <div key={index} className="garden-plot" onClick={() => clickCrop(index)}>
+              {STAGE_EMOJIS[stage]}
+            </div>
+          ))}
         </div>
 
         <div className="toolbar-sidebar">
           <h3>Tools</h3>
-          <button className="tool-btn">💧 Water</button>
-          <button className="tool-btn">🪓 Remove Plants</button>
+          <button
+            className={`tool-btn ${activeTool === 'water' ? 'active' : ''}`}
+            onClick={() => setActiveTool('water')}
+          >
+            💧 Water
+          </button>
+          <button
+            className={`tool-btn ${activeTool === 'remove' ? 'active' : ''}`}
+            onClick={() => setActiveTool('remove')}
+          >
+            🪓 Remove Plants
+          </button>
         </div>
 
       </div>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

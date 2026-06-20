@@ -56,17 +56,11 @@
 
 .garden-grid {
   display: grid;
-  /* 1. Turns this element into a grid system */
-
-  /* 2. Creates 3 equal-sized columns */
-  grid-template-columns: repeat(3, 1fr);
-
-  /* 3. Adds space/soil gaps between your plots */
+  /* We removed grid-template-columns from here because React handles it now! */
   gap: 12px;
-
   width: 100%;
   max-width: 400px;
-  /* Keeps the grid from stretching too wide */
+  /* Keeps the entire grid structured and centered */
   margin: 20px auto;
 }
 
@@ -173,4 +167,13 @@
   border-color: var(--accent);
   background-color: var(--accent-bg);
   color: var(--text-h);
+}
+
+/* Styling for when a tool is selected/active */
+.tool-btn.active {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--text-h);
+  box-shadow: 0 0 8px var(--accent);
+  transform: scale(0.98);
 }
