@@ -55,6 +55,12 @@ function App() {
           })}
         </div>
 
+        <div className="toolbar-sidebar">
+          <h3>Tools</h3>
+          <button className="tool-btn">💧 Water</button>
+          <button className="tool-btn">🪓 Remove Plants</button>
+        </div>
+
       </div>
     </>
   )

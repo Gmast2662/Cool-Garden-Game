@@ -97,3 +97,80 @@
   border-color: var(--accent);
   transform: scale(1.03);
 }
+
+.toolbar-sidebar {
+  position: absolute;
+
+  /* 1. Anchors it to the left side of the screen */
+  left: 40px;
+  /* Adjust this to change how far it sits from the left edge */
+
+  /* 2. Dead-centers it vertically (height / 2) */
+  top: 50%;
+  transform: translateY(-50%);
+  /* This offsets its own height to make it perfectly centered */
+
+  /* 3. Sizing controls to keep it scaling beautifully */
+  width: 140px;
+  max-width: 15vw;
+  /* Prevents it from getting wider than 15% of the screen */
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px;
+  background-color: var(--code-bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Update your tool button styles to this */
+.tool-btn {
+  width: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+
+  /* Flexbox settings to handle shrinking text */
+  display: flex;
+  flex-direction: row;
+  /* Side-by-side by default */
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 4px;
+  /* Minimal side padding */
+  font-size: clamp(0.75rem, 1.1vw, 0.95rem);
+  /* Dynamically scales text down */
+  box-sizing: border-box;
+}
+
+/* 🔄 The trick: when the screen gets narrow, change the button's layout */
+@media (max-width: 1200px) and (min-width: 951px) {
+  .toolbar-sidebar {
+    width: 90px;
+    /* Let the sidebar get skinnier */
+    padding: 8px;
+  }
+
+  .tool-btn {
+    flex-direction: column;
+    /* Stacks emoji directly on top of text */
+    gap: 2px;
+    padding: 8px 2px;
+    font-size: 0.75rem;
+    /* Keeps text small and neat */
+    text-align: center;
+  }
+}
+
+.tool-btn:hover {
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
+  color: var(--text-h);
+}
