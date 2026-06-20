@@ -1,0 +1,99 @@
+.game-container {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/* A handy grid container for when you start adding garden plots/soil patches */
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 2rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* Example button styling for your inventory/actions */
+.game-btn {
+  background-color: var(--accent);
+  color: #14220f;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+
+.game-btn:hover {
+  filter: brightness(1.1);
+}
+
+.game-btn:active {
+  transform: scale(0.98);
+}
+
+.game-title {
+  font-family: var(--heading);
+  font-size: 56px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 40px 0 10px 0;
+  letter-spacing: -1px;
+}
+
+@media (max-width: 1024px) {
+  .game-title {
+    font-size: 38px;
+    margin: 24px 0 8px 0;
+  }
+}
+
+.garden-grid {
+  display: grid;
+  /* 1. Turns this element into a grid system */
+
+  /* 2. Creates 3 equal-sized columns */
+  grid-template-columns: repeat(3, 1fr);
+
+  /* 3. Adds space/soil gaps between your plots */
+  gap: 12px;
+
+  width: 100%;
+  max-width: 400px;
+  /* Keeps the grid from stretching too wide */
+  margin: 20px auto;
+}
+
+/* Styling for the individual dirt patches */
+.garden-plot {
+  aspect-ratio: 1 / 1;
+  /* Forces the plots to stay perfectly square */
+  background-color: var(--code-bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+
+  /* Centers the emojis/plants perfectly inside the plot */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Subtle animation when a player hovers or clicks a plot */
+.garden-plot:hover {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  transform: scale(1.03);
+}
